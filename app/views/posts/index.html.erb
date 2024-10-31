@@ -1,0 +1,17 @@
+<h1>All Posts</h1>
+
+<% if @posts.any? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <strong><%= post.user.username %></strong>: <%= post.content %> <br>
+        <em>Last updated: <%= post.updated_at.strftime("%B %d, %Y %I:%M %p") %></em> <br>
+        <%= link_to "Comments (#{post.comments.count})", post_path(post) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No posts available.</p>
+<% end %>
+
+<%= link_to "Create New Post", new_post_path %>
