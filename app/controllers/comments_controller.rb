@@ -4,10 +4,12 @@ class CommentsController < ApplicationController
     def create
       @post = Post.find(params[:post_id])
       @comment = @post.comments.build(comment_params.merge(user: current_user))
-      if @comment.save
+      if @comment.valid?
+        @comment.save
         redirect_to post_path(@post)
       else
-        @error_messages = @post.errors.full_messages
+        @comments = @post.comments.includes(:user)
+        @error_messages = @comment.errors.full_messages
         render 'posts/show'
       end
     end
