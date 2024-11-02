@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
       if @comment.save
         redirect_to post_path(@post)
       else
+        @error_messages = @post.errors.full_messages
         render 'posts/show'
       end
     end

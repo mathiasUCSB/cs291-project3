@@ -11,4 +11,10 @@
   </div>
 <% end %>
 
+<% if @error_messages.present? %>
+  <script>
+    alert("Validation Error: \n<%= j @error_messages.join('\\n') %>");
+  </script>
+<% end %>
+
 <%= link_to "Back to Posts", root_path %>

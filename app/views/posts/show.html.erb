@@ -18,6 +18,7 @@
 
 <h3>Add a Comment</h3>
 <%= form_with(model: [@post, @comment], local: true) do |form| %>
+
   <div>
     <%= form.label :content %>
     <%= form.text_area :content, required: true %>

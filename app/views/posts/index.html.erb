@@ -7,6 +7,10 @@
         <strong><%= post.user.username %></strong>: <%= post.content %> <br>
         <em>Last updated: <%= post.updated_at.strftime("%B %d, %Y %I:%M %p") %></em> <br>
         <%= link_to "Comments (#{post.comments.count})", post_path(post) %>
+        <% if post.user == current_user %>
+          <%= link_to "Edit Post", edit_post_path(post) %>
+          <%= button_to "Delete Post", post, method: :delete %>
+        <% end %>
       </li>
     <% end %>
   </ul>

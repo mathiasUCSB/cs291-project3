@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
     before_action :require_login
-    before_action :set_post, only: %i[show edit update destroy]
-    before_action :authorize_user, only: %i[edit update destroy]
+    before_action :set_post, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_user, only: [:edit, :update, :destroy]
   
     def index
       @posts = Post.includes(:user, :comments).order(created_at: :desc)
@@ -22,22 +22,26 @@ class PostsController < ApplicationController
       if @post.save
         redirect_to root_path
       else
+        @error_messages = @post.errors.full_messages
         render :new
       end
     end
   
-    def edit; end
+    def edit
+      redirect_to root_path unless @post.user == current_user
+    end
   
     def update
-      if @post.update(post_params)
-        redirect_to post_path(@post)
+      if @post.update(post_params) && @post.user == current_user
+        redirect_to root_path(@post)
       else
+        @error_messages = @post.errors.full_messages
         render :edit
       end
     end
   
     def destroy
-      @post.destroy
+      @post.destroy if @post.user == current_user
       redirect_to root_path
     end
   
