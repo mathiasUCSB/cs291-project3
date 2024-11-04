@@ -8,8 +8,9 @@ class Post < ApplicationRecord
 
   private
 
+  # election filter
   def no_election_influence
-    prohibited_words = ["Trump", "Harris"]
+    prohibited_words = ["Trump", "Donald Trump", "Kamala Harris", "Harris", "fake news"]
     if prohibited_words.any? { |word| content.match?(/\b#{word}\b/i) }
       errors.add(:content, "cannot include words related to election influence")
     end

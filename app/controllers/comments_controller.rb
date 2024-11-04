@@ -2,9 +2,10 @@ class CommentsController < ApplicationController
     before_action :require_login
   
     def create
+      # create comment
       @post = Post.find(params[:post_id])
       @comment = @post.comments.build(comment_params.merge(user: current_user))
-      if @comment.valid?
+      if @comment.valid? # check validation constraints
         @comment.save
         redirect_to post_path(@post)
       else

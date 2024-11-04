@@ -18,11 +18,12 @@ class PostsController < ApplicationController
     end
   
     def create
+      # create post
       @post = current_user.posts.build(post_params)
       if @post.save
         redirect_to root_path
       else
-        @error_messages = @post.errors.full_messages
+        @error_messages = @post.errors.full_messages # add error messages if the post doesn't pass validation
         render :new
       end
     end
@@ -32,6 +33,7 @@ class PostsController < ApplicationController
     end
   
     def update
+      # update post if current user created the post
       if @post.update(post_params) && @post.user == current_user
         redirect_to root_path(@post)
       else
@@ -41,6 +43,7 @@ class PostsController < ApplicationController
     end
   
     def destroy
+      # delete post if current user created the post
       @post.destroy if @post.user == current_user
       redirect_to root_path
     end
