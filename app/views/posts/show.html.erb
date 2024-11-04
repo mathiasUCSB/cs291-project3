@@ -1,0 +1,38 @@
+<h1><%= @post.content %></h1>
+<p>Posted by: <strong><%= @post.user.username %></strong></p>
+<p>Last updated: <%= @post.updated_at.strftime("%B %d, %Y %I:%M %p") %></p>
+
+<h2>Comments</h2>
+
+<% if @error_messages&.any? %>
+  <script>
+    alert("Validation Error: \n<%= j @error_messages.join('\\n') %>");
+  </script>
+<% end %>
+
+<% if @comments&.any? %>
+  <ul>
+    <% @comments.each do |comment| %>
+      <li>
+        <strong><%= comment.user.username %></strong>: <%= comment.content %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No comments yet.</p>
+<% end %>
+
+<h3>Add a Comment</h3>
+<%= form_with(model: [@post, @comment], local: true) do |form| %>
+
+  <div>
+    <%= form.label :content %>
+    <%= form.text_area :content, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Add Comment" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Posts", root_path %>
