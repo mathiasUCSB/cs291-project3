@@ -4,13 +4,13 @@
 
 <h2>Comments</h2>
 
-<% if @error_messages.any? %>
+<% if @error_messages&.any? %>
   <script>
     alert("Validation Error: \n<%= j @error_messages.join('\\n') %>");
   </script>
 <% end %>
 
-<% if @comments.any? %>
+<% if @comments&.any? %>
   <ul>
     <% @comments.each do |comment| %>
       <li>
